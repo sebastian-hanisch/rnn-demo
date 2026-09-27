@@ -140,16 +140,19 @@ st.plotly_chart(viz.build_error_curve_figure(out["errors_per_epoch"]),
 
 st.markdown("---")
 st.subheader("🎯 Erfolgsquote vs. Sequenzlänge (fester Trainingsumfang)")
-with st.spinner("Berechne Erfolgsquote über 15 Zufalls-Initialisierungen je Sequenzlänge "
-               "(einmalig, kann bis zu ~40 Sekunden dauern - lange Sequenzen sind langsam "
-               "zu trainieren)..."):
-    sweep = _t_sweep()
-st.plotly_chart(viz.build_t_sweep_figure(sweep), key="t_sweep_chart", use_container_width=True)
-st.caption(
-    "Bei T=2–10 gelingt fast jede Initialisierung (100 %). Ab T=20 wird der Erfolg "
-    "zunehmend eine Frage des Zufalls (Initialisierung) statt der Garantie - bei T=150 nur "
-    "noch rund die Hälfte."
-)
+if st.button("Erfolgsquote berechnen (15 Zufalls-Initialisierungen je Sequenzlänge, "
+             "einmalig bis zu ~40 Sekunden - lange Sequenzen sind langsam zu trainieren)",
+             key="t_sweep_start"):
+    st.session_state["t_sweep_done"] = True
+if st.session_state.get("t_sweep_done"):
+    with st.spinner("Berechne Erfolgsquote..."):
+        sweep = _t_sweep()
+    st.plotly_chart(viz.build_t_sweep_figure(sweep), key="t_sweep_chart", use_container_width=True)
+    st.caption(
+        "Bei T=2–10 gelingt fast jede Initialisierung (100 %). Ab T=20 wird der Erfolg "
+        "zunehmend eine Frage des Zufalls (Initialisierung) statt der Garantie - bei T=150 nur "
+        "noch rund die Hälfte."
+    )
 
 st.subheader("🎯 Gradientennorm: erster vs. letzter Zeitschritt")
 grad_rows = _gradient_norm_sweep()

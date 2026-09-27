@@ -93,8 +93,9 @@ Seeds, nicht ein einzelner Lauf.
 
 Sequenzlänge, verdeckte Einheiten, Trainingsgröße, Rauschen, Lernrate, Epochen und Seed in der
 Sidebar; eine Beispielsequenz mit markiertem Signal; Fehlerkurve und Testgenauigkeit für die
-aktuelle Konfiguration; der Erfolgsquote-vs-$T$-Sweep und die Gradientennorm-vs-$T$-Kurve als
-zentrale Belege; ein "📐"-Abschnitt mit der $T=1$-Korrektheits-Kette und dem Gradienten-Check.
+aktuelle Konfiguration; der Erfolgsquote-vs-$T$-Sweep (auf Klick, einmalig bis zu ~40 Sekunden)
+und die Gradientennorm-vs-$T$-Kurve als zentrale Belege; ein "📐"-Abschnitt mit der
+$T=1$-Korrektheits-Kette und dem Gradienten-Check.
 
 ## Was nicht funktioniert hat / Grenzen
 
@@ -115,6 +116,14 @@ BLAS-Implementierung) nach vielen Schritten zu einem völlig anderen Ergebnis f�
 15 Seeds gemittelte, robuste Aussage für den "Lange Sequenz"-Fall statt einer einzelnen exakten
 Zahl (siehe `feedback_ci_platform_robust_tests.md` in der Projekt-Historie – dieselbe Lehre, die
 bereits vor dieser Linie bekannt war, hier aber zunächst nicht angewendet wurde).
+
+**Dritte Korrektur (Keep-alive-Check auf sebastianhanisch.net, 2026-09-27):** Der $T$-Sweep lief
+zunächst automatisch bei jedem Laden der Seite. Nach dem Einschlafen der App auf Streamlit Cloud
+addierte sich die Aufweckzeit des Containers mit der Trainingszeit des Sweeps und riss das
+150-Sekunden-Zeitbudget des Keep-alive-Checks der Website. Der Sweep steht jetzt hinter einem
+Button (`t_sweep_start`) – die Seite baut sich sofort auf, die Berechnung startet erst auf
+Wunsch. Ergebnis serverseitig zwischengespeichert (`st.cache_data`), spätere Aufrufe sind sofort
+fertig.
 
 **Grenzen:** Nur ein Bit muss über die Zeit getragen werden (die einfachste Version der
 Aufgabe) – komplexere Aufgaben (zwei Positionen in Beziehung setzen, wie Hochreiter &

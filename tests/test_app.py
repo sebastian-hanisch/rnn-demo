@@ -1,10 +1,6 @@
 from streamlit.testing.v1 import AppTest
 
-# Hoeherer Timeout als in den Geschwister-Repos: der T-Sweep (15 Inits x 7
-# T-Werte bis T=150) braucht auf einem langsamen CI-Runner deutlich laenger
-# als lokal (siehe rnn_evaluation.t_sweep-Performance-Hinweis in der Memory-
-# Notiz); 60s reichte auf der Linux-CI nicht.
-_APP_TIMEOUT = 180
+_APP_TIMEOUT = 60
 
 
 def _fresh():
@@ -53,3 +49,18 @@ def test_T_slider_extreme_values_do_not_crash():
     t_slider = [s for s in at.slider if s.label.startswith("Sequenzlänge")][0]
     t_slider.set_value(t_slider.max).run()
     assert not at.exception
+
+
+def test_t_sweep_is_not_computed_on_a_fresh_load():
+    """Der Sweep (15 Inits x 7 T-Werte bis T=150) darf nicht automatisch beim Laden starten -
+    sonst blockiert er den ersten Seitenaufbau nach dem Aufwecken auf Streamlit Cloud um bis zu
+    ~40 Sekunden (siehe .github/keep-alive-Timeout in sebastianhanisch-website)."""
+    at = _fresh()
+    assert "t_sweep_chart" not in [c.key for c in at.get("plotly_chart")]
+
+
+def test_t_sweep_runs_on_demand():
+    at = _fresh()
+    next(b for b in at.button if b.key == "t_sweep_start").click().run()
+    assert not at.exception
+    assert "t_sweep_chart" in [c.key for c in at.get("plotly_chart")]
