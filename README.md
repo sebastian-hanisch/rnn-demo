@@ -75,8 +75,11 @@ Trainingsbeispiele, 30 Epochen, SGD):
 | 150 | 0,000000000067 | 0,98 |
 
 **Presets:** "Kurze Sequenz — gelingt" ($T=10$): 97,5 % Testgenauigkeit. "Lange Sequenz — Erfolg
-wird unzuverlässig" ($T=150$, ein gezielt gewählter Seed): 30 % Testgenauigkeit (nahe
-Zufallsniveau 50 % bei binärer Klassifikation).
+wird unzuverlässig" ($T=150$): über 15 Seeds gemittelt nur **≈70 % Testgenauigkeit** (Streuung
+30–100 % je nach Seed) – deutlich unter dem Niveau kurzer Sequenzen und mit erheblicher
+Schwankung. Der einzelne im Preset gezeigte Seed liefert je nach Rechner/Plattform eine andere
+konkrete Zahl (siehe Plan-Korrektur unten) – die robuste Aussage ist der Mittelwert über viele
+Seeds, nicht ein einzelner Lauf.
 
 ## Modell und Verfahren
 
@@ -102,6 +105,16 @@ genug Epochen (100) erreichte das RNN mit Adam auch bei $T=80$ zuverlässig 100 
 relativ auf, was den verschwindenden Gradienten teilweise kompensiert. Umgestellt auf einfaches
 SGD (ohne adaptive Normalisierung) bei einem realistischen, festen Epochenbudget – seither zeigt
 sich der Effekt klar und robust über mehrere Seeds.
+
+**Zweite echte Plan-Korrektur (CI-Lauf, Push von Stück 4):** Die erste Testversion pinnte die
+Testgenauigkeit eines einzelnen, gezielt gewählten Seeds bei $T=150$ exakt auf 30 % – das
+Training über 30 Epochen auf dieser nichtlinearen $\tanh$-Dynamik ist chaotisch genug, dass
+winzige Gleitkomma-Unterschiede zwischen Windows und der Linux-CI (unterschiedliche
+BLAS-Implementierung) nach vielen Schritten zu einem völlig anderen Ergebnis führen (auf der CI
+85 % statt 30 % für denselben Seed). Behoben durch ein Toleranzband beim $T$-Sweep und eine über
+15 Seeds gemittelte, robuste Aussage für den "Lange Sequenz"-Fall statt einer einzelnen exakten
+Zahl (siehe `feedback_ci_platform_robust_tests.md` in der Projekt-Historie – dieselbe Lehre, die
+bereits vor dieser Linie bekannt war, hier aber zunächst nicht angewendet wurde).
 
 **Grenzen:** Nur ein Bit muss über die Zeit getragen werden (die einfachste Version der
 Aufgabe) – komplexere Aufgaben (zwei Positionen in Beziehung setzen, wie Hochreiter &
