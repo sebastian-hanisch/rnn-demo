@@ -140,7 +140,10 @@ st.plotly_chart(viz.build_error_curve_figure(out["errors_per_epoch"]),
 
 st.markdown("---")
 st.subheader("🎯 Erfolgsquote vs. Sequenzlänge (fester Trainingsumfang)")
-sweep = _t_sweep()
+with st.spinner("Berechne Erfolgsquote über 15 Zufalls-Initialisierungen je Sequenzlänge "
+               "(einmalig, kann bis zu ~40 Sekunden dauern - lange Sequenzen sind langsam "
+               "zu trainieren)..."):
+    sweep = _t_sweep()
 st.plotly_chart(viz.build_t_sweep_figure(sweep), key="t_sweep_chart", use_container_width=True)
 st.caption(
     "Bei T=2–10 gelingt fast jede Initialisierung (100 %). Ab T=20 wird der Erfolg "
