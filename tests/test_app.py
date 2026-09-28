@@ -1,6 +1,11 @@
 from streamlit.testing.v1 import AppTest
 
-_APP_TIMEOUT = 60
+# Die Seite selbst baut sich jetzt sofort auf (T-Sweep hinter einem Button), aber
+# test_t_sweep_runs_on_demand loest genau diese ~40-105-Trainingslaeufe-Berechnung per
+# Klick trotzdem aus - auf der Linux-CI reichte hierfuer 60s nicht (66s gemessen, siehe
+# rnn_evaluation.t_sweep-Performance-Hinweis in der Memory-Notiz). default_timeout gilt
+# je .run()-Aufruf, also auch fuer den Klick, nicht nur fuer den ersten Seitenaufbau.
+_APP_TIMEOUT = 180
 
 
 def _fresh():
