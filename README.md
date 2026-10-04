@@ -16,8 +16,8 @@ Perceptron (WURZEL)                              [gebaut]
  └─ MLP + Backpropagation                        [gebaut]
       ├─ CNN                                     [gebaut]
       └─ RNN                                     [DIESES STÜCK]
-           └─ LSTM                               [nicht gebaut]
-                └─ Attention/Transformer         [nicht gebaut]
+           └─ LSTM                               [gebaut]
+                └─ Attention/Transformer         [gebaut]
 ```
 
 **Ergebnis in Kürze:** Ein Bit Information über eine Sequenz zu tragen gelingt bei kurzen
@@ -174,3 +174,7 @@ streamlit run app.py
 - Elman, J. L. (1990). *Finding Structure in Time.* Cognitive Science, 14(2), 179–211.
 - Hochreiter, S. & Schmidhuber, J. (1997). *Long Short-Term Memory.* Neural Computation, 9(8),
   1735–1780 (Adding Problem/Temporal Order als Vehikel-Vorlage).
+
+---
+
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Neuronale Netze: vom Perceptron zum Transformer](https://sebastianhanisch.net/konzepte-neuronale-netze.html).

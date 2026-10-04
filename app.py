@@ -62,8 +62,8 @@ st.markdown(
     "'weit zurückliegend' lernen soll, wird auf dem Weg dorthin immer schwächer."
 )
 st.caption(
-    "Stück 4 (Geschwister von CNN) der 'Neuronale Netze'-Reihe. Geplante Folgestücke "
-    "(noch nicht gebaut): LSTM, Attention/Transformer - dieselbe Aufgabe, größeres T."
+    "Stück 4 (Geschwister von CNN) der 'Neuronale Netze'-Reihe. Folgestücke "
+    "(gebaut): LSTM (Stück 5), Attention/Transformer (Stück 6) - dieselbe Aufgabe, größeres T."
 )
 
 with st.expander("So funktioniert das RNN", expanded=True):
@@ -151,7 +151,7 @@ if st.session_state.get("t_sweep_done"):
     st.caption(
         "Bei T=2–10 gelingt fast jede Initialisierung (100 %). Ab T=20 wird der Erfolg "
         "zunehmend eine Frage des Zufalls (Initialisierung) statt der Garantie - bei T=150 nur "
-        "noch rund die Hälfte."
+        "noch etwa 40 %."
     )
 
 st.subheader("🎯 Gradientennorm: erster vs. letzter Zeitschritt")
@@ -207,7 +207,7 @@ $h_0=0$) - das RNN reduziert sich auf eine einzelne dichte Schicht.
 
 st.markdown("---")
 st.caption(
-    "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) "
-    "– Operations Research und Machine Learning. Interesse an einer maßgeschneiderten Lösung "
-    "für Ihr Unternehmen? [Kontakt aufnehmen](https://sebastianhanisch.net/kontakt.html)"
+    "Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – "
+    "Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). "
+    "Mehr zur Reihe: [Neuronale Netze: vom Perceptron zum Transformer](https://sebastianhanisch.net/konzepte-neuronale-netze.html)."
 )
