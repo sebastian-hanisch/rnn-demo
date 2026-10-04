@@ -132,11 +132,12 @@ gilt für ein FESTES, realistisches Trainingsbudget, nicht als absolute Unmögli
 
 ## Tests
 
-30 Tests, `python -m pytest tests/ -v`:
+35 Tests, `python -m pytest tests/ -v`:
 - `test_scenario.py` – Reproduzierbarkeit, Signalposition, Klassenbalance.
 - `test_model.py` – Forward/Backward, Gradienten-Check, Gradientennorm-Abfall,
   Korrektheits-Kette.
 - `test_evaluation.py` – $T$-Sweep, Gradientennorm-Sweep.
+- `test_oracle_bptt.py` – unabhängige Orakel: Complex-Step-Gradienten und -Deltas, eigener BPTT-Trainer.
 - `test_presets.py`, `test_claims.py` – jede Zahl oben nachgerechnet.
 - `test_app.py` – Streamlit `AppTest`: Presets, Regler-Extremwerte, Footer.
 
